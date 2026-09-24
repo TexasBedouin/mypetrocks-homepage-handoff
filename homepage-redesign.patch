@@ -274334,10 +274334,10 @@ index 0000000..6f63b76
 +});
 diff --git a/src/components/landing/home/WorldsWallHero.tsx b/src/components/landing/home/WorldsWallHero.tsx
 new file mode 100644
-index 0000000..148331a
+index 0000000..6eab381
 --- /dev/null
 +++ b/src/components/landing/home/WorldsWallHero.tsx
-@@ -0,0 +1,229 @@
+@@ -0,0 +1,232 @@
 +import { useCallback, useMemo, useState, type CSSProperties } from 'react';
 +import { useDropzone } from 'react-dropzone';
 +import { Upload, ArrowRight, Pause, Play } from 'lucide-react';
@@ -274422,16 +274422,19 @@ index 0000000..148331a
 +  return (
 +    <section className="relative overflow-hidden bg-[radial-gradient(ellipse_60%_80%_at_80%_50%,#231f17_0%,hsl(var(--background))_70%)]">
 +      {/* No wall images (list empty, or every image failed): the copy
-+          centers on its own instead of leaving an empty right half. */}
++          centers on its own instead of leaving an empty right half.
++          MOBILE SAFETY: one explicit column (grid-cols-1) and min-w-0 on the
++          children, so the very wide sliding image row can never stretch the
++          layout and push the headline off screen. */}
 +      <div
 +        className={cn(
-+          'mx-auto grid max-w-7xl items-center gap-10',
++          'mx-auto grid max-w-7xl grid-cols-1 items-center gap-10',
 +          tiles.length > 0 && 'md:grid-cols-[minmax(0,540px)_1fr] md:gap-14 md:pl-8',
 +        )}
 +      >
 +        <div
 +          className={cn(
-+            'px-5 pt-10 text-center md:py-20',
++            'relative z-10 min-w-0 px-5 pt-10 text-center md:py-20',
 +            tiles.length > 0 ? 'md:px-0 md:text-left' : 'mx-auto max-w-3xl pb-10',
 +          )}
 +        >
@@ -274515,7 +274518,7 @@ index 0000000..148331a
 +            {/* Mobile: one row sliding sideways under the copy. */}
 +            <div
 +              aria-hidden="true"
-+              className="overflow-hidden md:hidden"
++              className="w-full min-w-0 overflow-hidden md:hidden"
 +              style={{ '--wall-state': paused ? 'paused' : 'running' } as CSSProperties}
 +            >
 +              <div className="flex w-max animate-worlds-left [animation-play-state:var(--wall-state)] motion-reduce:animate-none">

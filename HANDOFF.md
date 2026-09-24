@@ -2,7 +2,7 @@
 
 **What this is:** a new homepage built around the brand line *"Your world, with your pet in it."* It was designed and approved by Amer, then built and tested locally on 2026-09-24. Paste `CURSOR_PROMPT.md` into Audos's Cursor to rebuild it on the live site.
 
-**Built on:** local branch `feat/homepage-your-world` in `Downloads\pet-art-prints`, 20 commits on top of the older `main` (`1bc0de6`). Not pushed anywhere.
+**Built on:** local branch `feat/homepage-your-world` in `Downloads\pet-art-prints`, 21 commits on top of the older `main` (`1bc0de6`). Not pushed anywhere.
 
 ## Checks it passed (locally)
 - A code review found no critical bugs. All 6 issues it raised are fixed: a pause button for the moving wall, accurate preview-time wording, no blank areas when images fail, and readable size labels on tablets.

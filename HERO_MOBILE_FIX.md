@@ -1,3 +1,18 @@
+# Hero fix: text disappearing on mobile
+
+Paste this whole file into Cursor.
+
+## Most likely causes (check in this order)
+
+1. **The sliding image row is stretching the layout.** On phones, the images slide in one very wide row (`w-max`). If its wrapper loses `overflow-hidden` or `min-w-0`, or the grid has no explicit `grid-cols-1`, that row widens the grid column and pushes the headline off screen. **Fix:** use the code below exactly. The grid has `grid-cols-1`, the text block has `relative z-10 min-w-0`, and the phone row's wrapper has `w-full min-w-0 overflow-hidden md:hidden`.
+2. **The Tailwind animations are missing.** Add the `worlds-up`, `worlds-down` and `worlds-left` keyframes and animation entries below to `tailwind.config.ts` (inside `theme.extend`). Without them, classes like `animate-worlds-left` do nothing, and the row may not render as intended.
+3. **The fixed header covers the hero.** The homepage wraps the sections in `<div className="pt-14">` to clear the 56px fixed header. If that padding is missing, the top of the hero hides under the header.
+4. **Theme colors.** The text uses `text-foreground` (light) on `bg-background` (dark). If production's theme swapped these, the text can become the same color as the background. Check the `--foreground` / `--background` CSS variables.
+5. **Every hero image failed to load.** If the `/home/wall/*.webp` images weren't copied, the wall hides itself and the text centers. That's safe, but confirm the images exist in `public/home/wall/`.
+
+## 1. `src/components/landing/home/WorldsWallHero.tsx` (replace the whole file)
+
+```tsx
 import { useCallback, useMemo, useState, type CSSProperties } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Upload, ArrowRight, Pause, Play } from 'lucide-react';
@@ -230,3 +245,72 @@ function WallTileImage({ tile, eager = false, onError, className }: WallTileImag
     </figure>
   );
 }
+```
+
+## 2. `src/components/landing/home/heroWall.ts`
+
+```ts
+/**
+ * The images on the homepage hero's "wall of worlds". Chosen by the founder
+ * (one per style), not pulled from the database, so the hero shows only the
+ * best work. Originals live outside the repo; these are 640px lossless WebP.
+ *
+ * TO CHANGE THE WALL:
+ * 1. Put the image in public/home/wall/ as WebP, about 640px on the long side
+ *    (each tile shows about 300px tall, so 640px is sharp on high-res screens.
+ *    Bigger files are NOT better here: the wall moves, and 1200px images made
+ *    browsers skip drawing the tiles).
+ * 2. Add, remove or reorder lines below. Order = order on the wall.
+ * 3. Keep `style` matching the style's name on the site; it is the caption.
+ */
+export interface WallImage {
+  style: string;
+  src: string;
+}
+
+export const HERO_WALL_IMAGES: WallImage[] = [
+  { style: 'Irezumi Dragon', src: '/home/wall/irezumi-dragon.webp' },
+  { style: 'Kanazawa Gold Leaf', src: '/home/wall/kanazawa-gold-leaf.webp' },
+  { style: 'Retro Cosmonaut', src: '/home/wall/retro-cosmonaut.webp' },
+  { style: 'Retro Cosmic Voyager', src: '/home/wall/retro-cosmic-voyager.webp' },
+  { style: 'Mystical Gothic', src: '/home/wall/mystical-gothic.webp' },
+  { style: 'Silk Scroll', src: '/home/wall/silk-scroll.webp' },
+  { style: 'Retro Mecha', src: '/home/wall/retro-mecha.webp' },
+  { style: 'Sumi-e Ink Wash', src: '/home/wall/sumi-e-ink-wash.webp' },
+  { style: 'Neo-Tokyo Drifter', src: '/home/wall/neo-tokyo-drifter.webp' },
+  { style: 'Victorian Engraving', src: '/home/wall/victorian-engraving.webp' },
+  { style: 'Imperial Bamboo Forest', src: '/home/wall/imperial-bamboo-forest.webp' },
+  { style: 'Lunar Woodblock', src: '/home/wall/lunar-woodblock.webp' },
+  { style: 'Dramatic Manga', src: '/home/wall/dramatic-manga.webp' },
+  { style: 'Sakura Dream', src: '/home/wall/sakura-dream.webp' },
+  { style: 'Chinese Literati', src: '/home/wall/chinese-literati.webp' },
+];
+
+/** How many styles the site offers, used in the hero copy. Update when styles are added. */
+export const TOTAL_STYLES = 15;
+```
+
+## 3. `tailwind.config.ts`: add inside `theme.extend.keyframes`
+
+```ts
+				// Worlds-wall hero: each strip holds its tiles twice and each tile
+				// has its own trailing margin (no gap), so the halves are equal and
+				// sliding by exactly half loops seamlessly.
+				'worlds-up': {
+					from: { transform: 'translateY(0)' },
+					to: { transform: 'translateY(-50%)' }
+	```
+
+## and inside `theme.extend.animation`
+
+```ts
+				'worlds-up': 'worlds-up 70s linear infinite',
+				'worlds-down': 'worlds-down 80s linear infinite',
+				'worlds-left': 'worlds-left 90s linear infinite'
+```
+
+## 4. How to confirm it's fixed (phone width, 375px)
+
+- The headline "Your pet is your biggest fandom..." is fully visible under the header.
+- The gold "See your pet free" button shows, with the sliding row of style images below it.
+- The page doesn't scroll sideways (`document.documentElement.scrollWidth` equals the screen width).
