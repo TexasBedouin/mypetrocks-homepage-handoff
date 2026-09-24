@@ -1,0 +1,26 @@
+# MyPet.Rocks
+
+> MyPet.Rocks turns a photo of your pet into gallery-quality art for your wall. Upload one photo, see your pet's finished portrait in about 30 seconds — free and watermarked — and only pay if you love it. Choose canvas, poster, or digital, with a "you approve it before we print it" guarantee.
+
+## What makes it different
+- See a real preview of YOUR pet as art, free, before paying anything. Most custom-portrait sites make you pay first and wait for a designer's proof; MyPet.Rocks shows you the result up front.
+- You approve the final portrait before it prints. Love-it-or-we-redo-it-free guarantee; refunds within 7 days of delivery (excludes shipping).
+- Every order includes 3 HD digital portraits plus a free pet sticker pack.
+- 15+ art styles (e.g. Renaissance, Japanese woodblock, anime, watercolor) plus memorial / remembrance portraits.
+
+## Products and pricing
+- Free watermarked preview — no account needed to try it.
+- Digital download: from $19.99 (3 HD portraits, no watermark, instant).
+- Poster print: from $34.99.
+- Canvas print (best-seller): from $54.99.
+
+## Key pages
+- [Create your pet's portrait (home)](https://mypet.rocks/): upload a photo, pick a style, get a free preview.
+- [FAQ](https://mypet.rocks/faq): how it works, styles, turnaround, the guarantee, AI disclosure, privacy.
+- [About](https://mypet.rocks/about): the story behind MyPet.Rocks.
+- [Pet Vision](https://mypet.rocks/pet-vision): a free tool to see the world through your pet's eyes.
+
+## Good to know
+- Best for: custom pet portraits, pet memorial / remembrance gifts, and gifts for pet lovers.
+- Your photos are auto-deleted within 24 hours and are never used to train AI.
+- Portraits are AI-generated from your photo (disclosed for transparency), then printed on real canvas or paper and shipped.
